@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environments
+.venv/
+.env/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# Data & reports artifacts
+/data/*.csv
+/data/*.parquet
+/reports/*.md
+/outputs/
+
+# Logs
+*.log
+
+# Streamlit
+.streamlit/

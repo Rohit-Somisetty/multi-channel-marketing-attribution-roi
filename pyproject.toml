@@ -1,0 +1,24 @@
+[project]
+name = "multi-channel-marketing-attribution-roi"
+version = "0.1.0"
+description = "Marketing attribution, incrementality, and ROI benchmarking toolkit"
+requires-python = ">=3.10"
+
+[tool.black]
+line-length = 120
+target-version = ["py310"]
+exclude = "notebooks"
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+extend-exclude = ["notebooks", "reports", "data"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra"
+testpaths = ["tests"]
+pythonpath = ["src"]
