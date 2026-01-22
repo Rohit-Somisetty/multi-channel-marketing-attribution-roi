@@ -6,14 +6,19 @@ import os
 import sys
 from pathlib import Path
 
-REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-if REPO_ROOT not in sys.path:
-    sys.path.insert(0, REPO_ROOT)
 
-from src.data_generation import GenerationConfig, build_synthetic_marketing_data
+def _ensure_src_on_path() -> None:
+    project_root = Path(__file__).resolve().parents[1]
+    src_path = project_root / "src"
+    if str(src_path) not in sys.path:
+        sys.path.insert(0, str(src_path))
 
 
 def main(output_dir: str = "data") -> None:
+    _ensure_src_on_path()
+
+    from src.data_generation import GenerationConfig, build_synthetic_marketing_data
+
     project_root = Path(__file__).resolve().parents[1]
     data_dir = project_root / output_dir
     fast_mode = os.getenv("FAST") == "1"
