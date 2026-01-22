@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/Rohit-Somisetty/multi-channel-marketing-attribution-roi/actions/workflows/ci.yml/badge.svg)](https://github.com/Rohit-Somisetty/multi-channel-marketing-attribution-roi/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11-blue)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 
 ## Business Problem
 Modern growth teams must quantify how paid media, lifecycle email, organic content, and in-person events contribute to pipeline, revenue, and customer lifetime value. Budgets are tightening, so we need a repeatable framework that reveals how combinations of touches influence conversions, surfaces incremental lift, and pinpoints channels that destroy or create ROI. This project delivers a reproducible toolkit that ingests raw touchpoints, aligns them to conversions, and produces stakeholder-ready attribution and ROI insights.
