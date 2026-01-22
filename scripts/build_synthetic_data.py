@@ -9,9 +9,8 @@ from pathlib import Path
 
 def _ensure_src_on_path() -> None:
     project_root = Path(__file__).resolve().parents[1]
-    src_path = project_root / "src"
-    if str(src_path) not in sys.path:
-        sys.path.insert(0, str(src_path))
+    if str(project_root) not in sys.path:
+        sys.path.insert(0, str(project_root))
 
 
 def main(output_dir: str = "data") -> None:
