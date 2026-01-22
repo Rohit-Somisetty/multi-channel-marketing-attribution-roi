@@ -13,8 +13,9 @@ SCRIPTS_DIR = PROJECT_ROOT / "scripts"
 
 
 def _run_script(script_name: str) -> None:
-    env = os.environ.copy()
-    env.setdefault("FAST", "1")
+    env = dict(os.environ)
+    env["FAST"] = env.get("FAST", "1")
+    env["PYTHONPATH"] = str(PROJECT_ROOT)
     subprocess.run([sys.executable, str(SCRIPTS_DIR / script_name)], check=True, env=env)
 
 

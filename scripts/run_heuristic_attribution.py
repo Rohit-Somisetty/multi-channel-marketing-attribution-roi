@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -12,8 +13,30 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from src import attribution_heuristics as heuristics
-from src import data_prep
+
+def _find_repo_root(start: Path) -> Path:
+    current = start
+    for _ in range(8):
+        if (current / "src").is_dir() and (current / "pyproject.toml").exists():
+            return current
+        if current.parent == current:
+            break
+        current = current.parent
+    return start
+
+
+def _ensure_repo_root_on_path() -> Path:
+    repo_root = _find_repo_root(Path(__file__).resolve())
+    if str(repo_root) not in sys.path:
+        sys.path.insert(0, str(repo_root))
+    return repo_root
+
+
+_REPO_ROOT = _ensure_repo_root_on_path()
+
+
+from src import attribution_heuristics as heuristics  # noqa: E402
+from src import data_prep  # noqa: E402
 
 plt.style.use("seaborn-v0_8")
 
@@ -68,9 +91,8 @@ def plot_credit_distribution(attribution_touches: pd.DataFrame, output_path: Pat
 
 
 def main(data_dir: str = "data", figures_dir: str = "reports/figures") -> None:
-    project_root = Path(__file__).resolve().parents[1]
-    data_path = project_root / data_dir
-    figures_path = project_root / figures_dir
+    data_path = _REPO_ROOT / data_dir
+    figures_path = _REPO_ROOT / figures_dir
     ensure_dir(figures_path)
     fast_mode = os.getenv("FAST") == "1"
 

@@ -8,11 +8,15 @@ from pathlib import Path
 
 
 def _find_repo_root(start: Path) -> Path:
+    markers = {"pyproject.toml", ".git", "README.md"}
     current = start
-    for _ in range(6):
+    for _ in range(8):
         candidate_src = current / "src"
-        if candidate_src.is_dir() and (candidate_src / "data_generation.py").exists():
+        has_markers = any((current / marker).exists() for marker in markers)
+        if candidate_src.is_dir() and (candidate_src / "data_generation.py").exists() and has_markers:
             return current
+        if current.parent == current:
+            break
         current = current.parent
     raise RuntimeError("Could not locate repo root containing src/data_generation.py")
 
@@ -21,15 +25,18 @@ def _ensure_repo_root_on_path() -> None:
     repo_root = _find_repo_root(Path(__file__).resolve())
     if str(repo_root) not in sys.path:
         sys.path.insert(0, str(repo_root))
+    return repo_root
+
+
+_REPO_ROOT = _ensure_repo_root_on_path()
+
+
+from src.data_generation import GenerationConfig, build_synthetic_marketing_data  # noqa: E402
 
 
 def main(output_dir: str = "data") -> None:
-    _ensure_repo_root_on_path()
 
-    from src.data_generation import GenerationConfig, build_synthetic_marketing_data
-
-    project_root = Path(__file__).resolve().parents[1]
-    data_dir = project_root / output_dir
+    data_dir = _REPO_ROOT / output_dir
     fast_mode = os.getenv("FAST") == "1"
     if fast_mode:
         config = GenerationConfig(
