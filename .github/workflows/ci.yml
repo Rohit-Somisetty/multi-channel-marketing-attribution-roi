@@ -26,6 +26,6 @@ jobs:
       - name: Black
         run: black --check .
       - name: Pytest
-        run: pytest -q
+        run: PYTHONPATH="$PWD/src" pytest -q
         env:
           FAST: "1"
